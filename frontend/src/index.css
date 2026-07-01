@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary-50: #fef2f2;
+  --color-primary-100: #fee2e2;
+  --color-primary-200: #fecaca;
+  --color-primary-300: #fca5a5;
+  --color-primary-400: #f87171;
+  --color-primary-500: #ef4444;
+  --color-primary-600: #dc2626;
+  --color-primary-700: #b91c1c;
+  --color-primary-800: #991b1b;
+  --color-primary-900: #7f1d1d;
+  --color-primary-950: #450a0a;
+}
+
+:root {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  color-scheme: light dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased selection:bg-primary-200 selection:text-primary-900;
+}
+
+html.dark body {
+  @apply bg-[#0a0a0a] text-neutral-300 selection:bg-primary-800 selection:text-white;
+}
+
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm dark:bg-[#0a0a0a]/70 dark:border-primary-900/50;
+}
+
+.glass-card {
+  @apply bg-white/90 backdrop-blur-lg border border-slate-200/50 shadow-xl dark:bg-[#0a0a0a]/90 dark:border-primary-900/50 dark:shadow-2xl;
+}

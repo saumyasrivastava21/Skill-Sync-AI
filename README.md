@@ -90,6 +90,7 @@ AI / ML Resume Intelligence Layer
 cd backend
 uvicorn app.main:app --reload
 ```
+<<<<<<< HEAD
 
 Backend will run on:
 
@@ -171,9 +172,88 @@ Day 1 foundation completed successfully.
 The project is now ready for Day 2 development, including API expansion, database models, resume upload flow, and production-level backend structure.
 
 uvicorn app.main:app --reload
+=======
+>>>>>>> 6cc0c67 (readme)
 
-Frontend:
+Backend will run on:
+
+```text
+http://127.0.0.1:8000
+```
+
+API docs:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+### Frontend
 
 ```bash
 cd frontend
+<<<<<<< HEAD
 npm run dev
+=======
+npm install
+npm run dev
+```
+
+Frontend will run on:
+
+```text
+http://localhost:5173
+```
+
+---
+
+### Docker Compose
+
+```bash
+docker compose up --build
+```
+
+To stop services:
+
+```bash
+docker compose down
+```
+
+---
+
+## Planned Features
+
+* Resume upload and parsing
+* Skill extraction using NLP
+* Job description matching
+* Candidate-job similarity scoring
+* AI-powered resume feedback
+* PostgreSQL persistence layer
+* Redis-based caching
+* Authentication system
+* CI/CD pipeline
+* Dockerized production deployment
+* Cloud deployment using AWS services
+
+---
+
+## Project Goal
+
+The goal of SkillSync AI is to build a production-level AI platform that demonstrates strong skills in:
+
+* Full-stack development
+* Backend API design
+* Database integration
+* Docker-based deployment
+* MLOps fundamentals
+* AI/NLP system design
+* Scalable software engineering
+
+---
+
+## Status
+
+Day 1 foundation completed successfully.
+The project is now ready for Day 2 development, including API expansion, database models, resume upload flow, and production-level backend structure.
+>>>>>>> 6cc0c67 (readme)

@@ -1,8 +1,24 @@
 # SkillSync AI
 
-**SkillSync AI** is a full-stack AI-powered Resume Intelligence Platform designed to analyze resumes, extract candidate skills, compare them with job requirements, and provide intelligent recommendations for career growth.
+> Full-Stack AI Resume Intelligence Platform for resume analysis, skill extraction, job-role matching, ATS scoring, and career recommendations.
 
-The project is built using a production-style architecture with **React**, **FastAPI**, **PostgreSQL**, **Redis**, **Docker**, and future-ready **MLOps workflows**.
+---
+
+## Overview
+
+**SkillSync AI** is a production-style AI platform that helps candidates and recruiters analyze resumes intelligently.
+
+It allows users to upload resumes, extract skills, compare them with job descriptions, identify missing skills, generate ATS-style scores, and receive AI-powered career recommendations.
+
+The project is built using a modern full-stack architecture with:
+
+* React + TypeScript frontend
+* FastAPI backend
+* PostgreSQL database
+* Redis caching
+* JWT authentication
+* Docker-based local infrastructure
+* Future-ready AI / ML / MLOps layer
 
 ---
 
@@ -13,6 +29,8 @@ The project is built using a production-style architecture with **React**, **Fas
 * React
 * TypeScript
 * Vite
+* Redux Toolkit
+* React Router
 * Tailwind CSS
 * Axios
 
@@ -21,7 +39,10 @@ The project is built using a production-style architecture with **React**, **Fas
 * FastAPI
 * Python
 * Pydantic
-* REST APIs
+* SQLAlchemy
+* Alembic
+* JWT Authentication
+* Passlib password hashing
 
 ### Database & Cache
 
@@ -34,71 +55,234 @@ The project is built using a production-style architecture with **React**, **Fas
 * Docker Compose
 * Environment-based configuration
 * Health-check APIs
-* Production-ready project structure
-
----
-
-## Day 1 Completed
-
-* Created React frontend foundation
-* Created FastAPI backend foundation
-* Designed Docker Compose setup
-* Integrated PostgreSQL service
-* Integrated Redis service
-* Added backend health-check APIs
-* Built professional frontend UI shell
-* Structured project for future AI, MLOps, and deployment workflows
+* Production-ready folder structure
+* Future AWS deployment support
 
 ---
 
 ## System Architecture
 
 ```text
-User
- ↓
-React Frontend
- ↓
-FastAPI Backend
- ↓
-PostgreSQL Database
- ↓
-Redis Cache
- ↓
-AI / ML Resume Intelligence Layer
+                         User
+                          |
+                          v
+                React + TypeScript Frontend
+                          |
+                          v
+                   Axios API Client
+                          |
+                          v
+                 FastAPI Backend APIs
+                          |
+        -------------------------------------
+        |                                   |
+        v                                   v
+ PostgreSQL Database                  Redis Cache
+        |                                   |
+        -------------------------------------
+                          |
+                          v
+          AI / ML Resume Intelligence Layer
+                          |
+                          v
+       Resume Parsing | Skill Extraction | ATS Score
+       Job Matching   | Gap Analysis     | Recommendations
 ```
 
 ---
 
-## Current Features
+## Current Progress
 
-* Full-stack project setup
-* Backend API server using FastAPI
-* Frontend application using React
-* PostgreSQL database service
-* Redis cache service
-* Docker-based local development
-* Health endpoint for backend validation
-* Clean and scalable folder structure
+### Day 1 Completed
+
+* React frontend foundation
+* FastAPI backend foundation
+* Docker Compose setup
+* PostgreSQL service integrated
+* Redis service integrated
+* Backend health-check APIs
+* Professional frontend UI shell
+* Production-style project structure
+
+### Day 2 Completed
+
+* JWT authentication backend
+* User registration API
+* User login API
+* Current user API
+* Password hashing
+* SQLAlchemy user model
+* Alembic migration setup
+* PostgreSQL users table
+* Frontend login connected with FastAPI backend
+* Bearer token authentication verified
 
 ---
 
-## Run Locally
+## Core Features
 
-### Backend
+### Completed
+
+* Full-stack project setup
+* Backend health APIs
+* PostgreSQL database connection
+* Redis service connection
+* JWT-based authentication
+* Register user API
+* Login user API
+* Get current authenticated user API
+* Frontend login integration
+
+### Upcoming
+
+* Resume upload system
+* Resume metadata storage
+* PDF text extraction
+* Skill extraction engine
+* Job description upload
+* Resume vs JD matching
+* ATS score generation
+* Missing skills analysis
+* AI-powered recommendations
+* User dashboard
+* Resume history
+* Recruiter view
+* MLflow experiment tracking
+* Dockerized production deployment
+
+---
+
+## Backend API Flow
+
+```text
+Register User
+     |
+     v
+Hash Password
+     |
+     v
+Store User in PostgreSQL
+     |
+     v
+Login User
+     |
+     v
+Verify Password
+     |
+     v
+Generate JWT Token
+     |
+     v
+Frontend Stores Token
+     |
+     v
+Authenticated API Requests
+```
+
+---
+
+## Resume Intelligence Flow
+
+```text
+Upload Resume
+     |
+     v
+Extract Text from PDF
+     |
+     v
+Clean and Normalize Text
+     |
+     v
+Extract Skills
+     |
+     v
+Compare with Job Description
+     |
+     v
+Generate ATS Score
+     |
+     v
+Find Missing Skills
+     |
+     v
+Recommend Learning Path
+```
+
+---
+
+## Project Structure
+
+```text
+skillsync-ai/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── features/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   └── main.tsx
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── db/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   └── main.py
+│   ├── alembic/
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── docker-compose.yml
+├── README.md
+└── .env.example
+```
+
+---
+
+## Local Setup
+
+### 1. Clone Repository
+
+```bash
+git clone <your-repo-url>
+cd skillsync-ai
+```
+
+---
+
+### 2. Start PostgreSQL and Redis
+
+```bash
+docker compose up -d
+```
+
+---
+
+### 3. Run Backend
 
 ```bash
 cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
-<<<<<<< HEAD
 
-Backend will run on:
+Backend runs at:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-API docs:
+Swagger Docs:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -106,7 +290,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-### Frontend
+### 4. Run Frontend
 
 ```bash
 cd frontend
@@ -114,7 +298,7 @@ npm install
 npm run dev
 ```
 
-Frontend will run on:
+Frontend runs at:
 
 ```text
 http://localhost:5173
@@ -122,138 +306,120 @@ http://localhost:5173
 
 ---
 
-### Docker Compose
+## Important APIs
 
-```bash
-docker compose up --build
+### Health Check
+
+```http
+GET /health
 ```
 
-To stop services:
+### Register User
 
-```bash
-docker compose down
+```http
+POST /api/v1/auth/register
+```
+
+### Login User
+
+```http
+POST /api/v1/auth/login
+```
+
+### Current User
+
+```http
+GET /api/v1/auth/me
+Authorization: Bearer <token>
 ```
 
 ---
 
-## Planned Features
+## Environment Variables
 
-* Resume upload and parsing
-* Skill extraction using NLP
-* Job description matching
-* Candidate-job similarity scoring
-* AI-powered resume feedback
-* PostgreSQL persistence layer
-* Redis-based caching
-* Authentication system
-* CI/CD pipeline
-* Dockerized production deployment
-* Cloud deployment using AWS services
+Create `.env` inside backend:
+
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/skillsync_db
+REDIS_URL=redis://localhost:6379
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
 
 ---
 
-## Project Goal
+## Production Vision
 
-The goal of SkillSync AI is to build a production-level AI platform that demonstrates strong skills in:
+SkillSync AI is designed as a production-level AI system, not just a basic CRUD app.
 
-* Full-stack development
-* Backend API design
-* Database integration
-* Docker-based deployment
-* MLOps fundamentals
-* AI/NLP system design
-* Scalable software engineering
-
----
-
-## Status
-
-Day 1 foundation completed successfully.
-The project is now ready for Day 2 development, including API expansion, database models, resume upload flow, and production-level backend structure.
-
-uvicorn app.main:app --reload
-=======
->>>>>>> 6cc0c67 (readme)
-
-Backend will run on:
+Future production components:
 
 ```text
-http://127.0.0.1:8000
+Frontend Dashboard
+        |
+FastAPI Backend
+        |
+PostgreSQL + Redis
+        |
+Resume Parser Service
+        |
+Embedding Service
+        |
+Vector Database
+        |
+LLM Recommendation Engine
+        |
+MLflow Tracking
+        |
+Docker + AWS Deployment
 ```
 
-API docs:
+---
+
+## Future MLOps Roadmap
+
+* Dockerize frontend and backend
+* Add GitHub Actions CI/CD
+* Add MLflow for experiment tracking
+* Add ChromaDB / FAISS for semantic resume search
+* Add AWS S3 for resume storage
+* Add AWS RDS for PostgreSQL
+* Add AWS ECR for Docker images
+* Deploy backend on AWS ECS / EC2
+* Add monitoring with Prometheus and Grafana
+* Add logging middleware
+* Add production error handling
+
+---
+
+## Interview-Level Explanation
+
+SkillSync AI is a full-stack AI-powered resume intelligence platform built using React, FastAPI, PostgreSQL, Redis, Docker, and JWT authentication.
+
+The frontend communicates with the FastAPI backend using Axios. The backend exposes REST APIs for authentication, resume upload, skill extraction, and job matching. PostgreSQL stores users, resumes, job descriptions, and analysis results, while Redis is used for caching and future background task optimization.
+
+The AI layer will extract skills from resumes, compare them with job descriptions, calculate ATS scores, identify skill gaps, and generate career recommendations. The project follows production-style architecture with modular backend services, environment configuration, database migrations, Docker setup, and future MLOps deployment support.
+
+---
+
+## Current Status
 
 ```text
-http://127.0.0.1:8000/docs
+Day 1: Full-stack foundation completed
+Day 2: JWT authentication completed
+Day 3: Resume upload + CRUD APIs in progress
 ```
 
 ---
 
-### Frontend
+## Author
 
-```bash
-cd frontend
-<<<<<<< HEAD
-npm run dev
-=======
-npm install
-npm run dev
-```
-
-Frontend will run on:
-
-```text
-http://localhost:5173
-```
+**Saumya Srivastava**
+Machine Learning Engineer | AI Engineer | Full-Stack AI Developer
 
 ---
 
-### Docker Compose
+## License
 
-```bash
-docker compose up --build
-```
-
-To stop services:
-
-```bash
-docker compose down
-```
-
----
-
-## Planned Features
-
-* Resume upload and parsing
-* Skill extraction using NLP
-* Job description matching
-* Candidate-job similarity scoring
-* AI-powered resume feedback
-* PostgreSQL persistence layer
-* Redis-based caching
-* Authentication system
-* CI/CD pipeline
-* Dockerized production deployment
-* Cloud deployment using AWS services
-
----
-
-## Project Goal
-
-The goal of SkillSync AI is to build a production-level AI platform that demonstrates strong skills in:
-
-* Full-stack development
-* Backend API design
-* Database integration
-* Docker-based deployment
-* MLOps fundamentals
-* AI/NLP system design
-* Scalable software engineering
-
----
-
-## Status
-
-Day 1 foundation completed successfully.
-The project is now ready for Day 2 development, including API expansion, database models, resume upload flow, and production-level backend structure.
->>>>>>> 6cc0c67 (readme)
+This project is for learning, portfolio, and production-level AI engineering practice.

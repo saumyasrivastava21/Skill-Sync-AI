@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: skillsync-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: skillsync_db
+      POSTGRES_USER: skillsync_user
+      POSTGRES_PASSWORD: skillsync_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - skillsync_postgres_data:/var/lib/postgresql/data
+    networks:
+      - skillsync-network
+
+  redis:
+    image: redis:7
+    container_name: skillsync-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - skillsync-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: skillsync-backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - skillsync-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: skillsync-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - skillsync-network
+
+volumes:
+  skillsync_postgres_data:
+
+networks:
+  skillsync-network:
+    driver: bridge

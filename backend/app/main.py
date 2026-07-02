@@ -1,10 +1,11 @@
 import time
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.router import api_router
 from app.core.config import get_settings
-from app.core.logging import setup_logging, logger
+from app.core.logging import logger, setup_logging
 
 setup_logging()
 
@@ -32,6 +33,7 @@ async def request_logging_middleware(request: Request, call_next):
     response = await call_next(request)
 
     process_time = round((time.time() - start_time) * 1000, 2)
+
     logger.info(
         "%s %s completed_in=%sms status_code=%s",
         request.method,
@@ -49,6 +51,7 @@ async def root():
         "message": "Welcome to SkillSync AI Backend",
         "docs": "/docs",
         "health": "/api/v1/health",
+        "auth": "/api/v1/auth",
     }
 
 

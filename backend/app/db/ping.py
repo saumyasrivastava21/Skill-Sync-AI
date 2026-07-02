@@ -8,7 +8,7 @@ def check_postgres() -> str:
     settings = get_settings()
 
     try:
-        with psycopg.connect(settings.database_url, connect_timeout=3) as conn:
+        with psycopg.connect(settings.psycopg_url, connect_timeout=3) as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT 1;")
                 result = cur.fetchone()

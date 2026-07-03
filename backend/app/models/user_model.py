@@ -1,9 +1,15 @@
+from __future__ import annotations
+
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, DateTime, Integer, String, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+
+if TYPE_CHECKING:
+    from app.models.resume_model import Resume
 
 
 class User(Base):
@@ -30,6 +36,11 @@ class User(Base):
     )
 
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+    resumes: Mapped[list["Resume"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

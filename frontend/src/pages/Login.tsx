@@ -59,38 +59,52 @@ export function Login() {
     }, 800);
   };
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      setIsLoading(true);
-      setApiError("");
+const onSubmit = async (data: LoginFormData) => {
+  try {
+    setIsLoading(true);
+    setApiError("");
 
-      const response = await api.post<LoginResponse>("/auth/login", {
-        email: data.email,
-        password: data.password,
-      });
+    console.log("LOGIN FORM DATA:", data);
 
-      dispatch(
-        setCredentials({
-          user: response.data.user,
-          token: response.data.access_token,
-        })
-      );
+    const response = await api.post<LoginResponse>("/auth/login", {
+      email: data.email,
+      password: data.password,
+    });
 
-      localStorage.setItem("skillsync_token", response.data.access_token);
-      localStorage.setItem("skillsync_refresh_token", response.data.refresh_token);
+    console.log("LOGIN RESPONSE:", response.data);
 
-      if (response.data.user.role === "candidate") {
-        navigate("/dashboard");
-      } else {
-        navigate("/recruiter");
-      }
-    } catch (error) {
-      console.error(error);
-      setApiError("Invalid email or password, or backend is not reachable.");
-    } finally {
-      setIsLoading(false);
+    const accessToken = response.data.access_token;
+    const refreshToken = response.data.refresh_token;
+    const user = response.data.user;
+
+    if (!accessToken) {
+      throw new Error("Access token missing from backend response");
     }
-  };
+
+    localStorage.setItem("skillsync_token", accessToken);
+    localStorage.setItem("skillsync_refresh_token", refreshToken);
+
+    console.log("TOKEN SAVED:", localStorage.getItem("skillsync_token"));
+
+    dispatch(
+      setCredentials({
+        user,
+        token: accessToken,
+      })
+    );
+
+    if (user.role === "candidate") {
+      navigate("/dashboard");
+    } else {
+      navigate("/recruiter");
+    }
+  } catch (error) {
+    console.error("LOGIN ERROR:", error);
+    setApiError("Invalid email or password, or backend is not reachable.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">

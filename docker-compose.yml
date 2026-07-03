@@ -36,6 +36,11 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/alembic:/app/alembic
+      - ./backend/alembic.ini:/app/alembic.ini
+      - ./backend/uploads:/app/uploads
     networks:
       - skillsync-network
 

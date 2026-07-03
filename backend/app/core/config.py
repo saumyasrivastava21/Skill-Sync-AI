@@ -7,7 +7,9 @@ class Settings(BaseSettings):
     API_VERSION: str = "v1"
     ENVIRONMENT: str = "development"
 
-    BACKEND_CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://localhost:80"
+    BACKEND_CORS_ORIGINS: str = (
+        "http://localhost:5173,http://localhost:3000,http://localhost:80"
+    )
 
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
@@ -22,6 +24,10 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
+    UPLOAD_DIR: str = "uploads/resumes"
+    MAX_UPLOAD_MB: int = 5
+    STORAGE_BACKEND: str = "local"
 
     model_config = SettingsConfigDict(
         env_file=".env",

@@ -18,3 +18,8 @@ python-multipart
 PyMuPDF
 python-docx
 aiofiles
+
+langchain
+langchain-core
+langgraph
+langchain-nvidia-ai-endpoints

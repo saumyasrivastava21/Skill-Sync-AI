@@ -1,17 +1,26 @@
-
 # SkillSync AI
 
-> Full-Stack AI Resume Intelligence Platform for resume parsing, skill extraction, job-role matching, ATS scoring, and career recommendations.
+> Full-Stack AI Resume Intelligence Platform for resume parsing, skill extraction, ATS scoring, job-role matching, RAG-style evidence retrieval, and AI-powered career recommendations.
 
 ---
 
 ## Overview
 
-**SkillSync AI** is a production-style AI platform that helps candidates and recruiters analyze resumes intelligently.
+**SkillSync AI** is a production-style AI Resume Intelligence Platform built for candidates and recruiters.
 
-The platform allows users to register, log in securely, upload resumes, extract resume text, identify technical skills, manage resume history, and prepare for future ATS-style job matching and AI-powered career recommendations.
+It allows users to upload resumes, parse resume content, extract skills, compare resumes against job descriptions, calculate ATS-style scores, detect missing skills, retrieve resume-based evidence, and generate AI-powered recommendations.
 
-This project is being built as a full-stack AI engineering system using a modern production-ready architecture.
+The project is designed as a full-stack AI engineering system using:
+
+- React + TypeScript frontend
+- FastAPI backend
+- PostgreSQL database
+- Redis cache
+- JWT authentication
+- Docker-based infrastructure
+- LangGraph AI workflow
+- NVIDIA LLM integration
+- Resume parsing and ATS intelligence layer
 
 ---
 
@@ -26,8 +35,9 @@ This project is being built as a full-stack AI engineering system using a modern
 - React Router
 - Tailwind CSS
 - Axios
+- Recharts
 - Framer Motion
-- Lucide React Icons
+- Lucide React
 
 ### Backend
 
@@ -38,9 +48,19 @@ This project is being built as a full-stack AI engineering system using a modern
 - Alembic
 - JWT Authentication
 - Passlib password hashing
-- Python Multipart
-- PyMuPDF
-- python-docx
+- Modular service architecture
+
+### AI / LLM Layer
+
+- LangChain
+- LangGraph
+- NVIDIA LLM API
+- Resume skill extraction
+- ATS scoring engine
+- Resume chunking
+- Evidence retrieval
+- Missing-skill analysis
+- Structured AI recommendations
 
 ### Database & Cache
 
@@ -53,8 +73,7 @@ This project is being built as a full-stack AI engineering system using a modern
 - Docker Compose
 - Environment-based configuration
 - Health-check APIs
-- Database migrations
-- Production-style folder structure
+- Production-style project structure
 - Future AWS deployment support
 
 ---
@@ -65,7 +84,7 @@ This project is being built as a full-stack AI engineering system using a modern
                          User
                           |
                           v
-              React + TypeScript Frontend
+                React + TypeScript Frontend
                           |
                           v
                    Axios API Client
@@ -79,15 +98,83 @@ This project is being built as a full-stack AI engineering system using a modern
  PostgreSQL Database                  Redis Cache
         |
         v
- Resume Metadata + Parsed Resume Data
+ Resume Storage + Metadata
         |
         v
- AI / ML Resume Intelligence Layer
+ Resume Parser + Skill Extractor
         |
         v
- Resume Parsing | Skill Extraction | ATS Score
- Job Matching   | Gap Analysis     | Recommendations
+ LangGraph ATS Intelligence Workflow
+        |
+        -------------------------------------
+        |                 |                 |
+        v                 v                 v
+ ATS Scoring      Evidence Retrieval   NVIDIA LLM
+        |                 |                 |
+        -------------------------------------
+                          |
+                          v
+        AI Recommendations + Skill Gap Report
 ````
+
+---
+
+## Core Features
+
+### Authentication
+
+* User registration
+* User login
+* JWT access token generation
+* Current authenticated user API
+* Password hashing with Passlib
+* Protected routes using Bearer token authentication
+
+### Resume Management
+
+* Resume upload
+* Resume metadata storage
+* Resume list API
+* Resume detail API
+* Resume download API
+* Resume delete API
+* PDF text extraction
+* Resume parsing status
+* Extracted skills storage
+* Word count tracking
+
+### AI Resume Intelligence
+
+* Job description input
+* Resume vs job description matching
+* ATS score generation
+* Skill match score
+* Keyword coverage score
+* Resume quality score
+* Matched skills detection
+* Missing skills detection
+* Extra resume skills detection
+* Resume chunking
+* RAG-style evidence retrieval
+* LangGraph workflow execution
+* NVIDIA LLM-based structured recommendations
+* Previous reports history
+* Report detail view
+* Report delete support
+
+### Frontend Dashboard
+
+* Candidate dashboard
+* API health status display
+* Resume count display
+* Latest ATS score display
+* Average ATS score display
+* Missing skills count
+* Latest report summary
+* Matched and missing skills preview
+* Real backend-connected analytics
+* Reports page with charts and recommendations
+* Previous report history
 
 ---
 
@@ -103,86 +190,59 @@ This project is being built as a full-stack AI engineering system using a modern
 * Backend health-check APIs
 * Professional frontend UI shell
 * Production-style project structure
-* Frontend routing and protected layout foundation
 
 ### Day 2 Completed
 
 * JWT authentication backend
 * User registration API
 * User login API
-* Current authenticated user API
+* Current user API
 * Password hashing
 * SQLAlchemy user model
 * Alembic migration setup
 * PostgreSQL users table
 * Frontend login connected with FastAPI backend
 * Bearer token authentication verified
-* Axios request interceptor added for authenticated APIs
 
 ### Day 3 Completed
 
-* Authenticated resume upload API
+* Resume upload backend API
 * Resume metadata storage in PostgreSQL
-* Resume model and schema added
-* Alembic migration for resumes table
-* PDF, DOCX, and TXT upload support
-* File validation for type and size
-* Local file storage system
-* Background resume parsing using FastAPI BackgroundTasks
-* Resume text extraction using PyMuPDF and python-docx
-* Skill extraction engine added
-* Resume word count extraction
-* Resume listing API with pagination and search
+* Resume list API
 * Resume detail API
-* Resume download API
 * Resume delete API
-* React resume upload page connected with real FastAPI backend
-* Upload progress UI added
-* Resume status tracking added
-* Download and delete actions connected from frontend
-* Full frontend-backend-database workflow verified using Dockerized PostgreSQL
+* Resume download API
+* PDF text extraction
+* Resume parsing service
+* Skill extraction service
+* Word count extraction
+* Frontend resume upload page connected with backend
+* Resume list and parsed status visible on frontend
 
----
+### Day 4 Completed
 
-## Core Features
-
-### Completed
-
-* Full-stack project setup
-* Backend health APIs
-* PostgreSQL database connection
-* Redis service connection
-* JWT-based authentication
-* Register user API
-* Login user API
-* Get current authenticated user API
-* Frontend login integration
-* Authenticated resume upload
-* Resume metadata persistence
-* Resume parsing
-* Skill extraction
-* Resume listing
-* Resume search
-* Resume download
-* Resume delete
-* Upload status tracking
-
-### Upcoming
-
-* Job description upload/input
-* Resume vs job description matching
-* ATS score generation
-* Missing skills analysis
-* AI-powered resume improvement suggestions
-* Career recommendation engine
-* Reports dashboard
-* Recruiter candidate search
-* Semantic resume search
-* Vector database integration
-* MLflow experiment tracking
-* AWS S3 resume storage
-* Dockerized production deployment
-* CI/CD pipeline
+* Added AI-powered ATS analysis module
+* Created `analysis_reports` database table
+* Added Alembic migration for analysis reports
+* Built LangGraph-based resume-job matching workflow
+* Added deterministic ATS scoring
+* Added skill match score
+* Added keyword coverage score
+* Added resume quality score
+* Added missing-skill detection
+* Added matched-skill detection
+* Added resume chunking service
+* Added RAG-style evidence retrieval service
+* Integrated NVIDIA LLM support for structured AI recommendations
+* Added fallback report generation when LLM is unavailable
+* Added report list, detail, delete, missing skills, recommendations, and evidence APIs
+* Connected Reports frontend page with real backend APIs
+* Replaced mock dashboard data with real resume and report analytics
+* Added charts using Recharts
+* Added LangGraph workflow trace UI
+* Added previous reports section
+* Fixed authentication, Docker, config, and TypeScript build issues
+* Verified complete frontend-backend integration
 
 ---
 
@@ -215,75 +275,81 @@ Authenticated API Requests
 
 ---
 
-## Resume Upload Flow
-
-```text
-Candidate Login
-     |
-     v
-JWT Token Stored in Frontend
-     |
-     v
-Upload Resume from React UI
-     |
-     v
-FastAPI Receives UploadFile
-     |
-     v
-Validate File Type and Size
-     |
-     v
-Store File Locally
-     |
-     v
-Save Resume Metadata in PostgreSQL
-     |
-     v
-Run Background Parser
-     |
-     v
-Extract Text from PDF / DOCX / TXT
-     |
-     v
-Clean and Normalize Text
-     |
-     v
-Extract Technical Skills
-     |
-     v
-Update Resume Status as Parsed
-     |
-     v
-Show Resume in Frontend Dashboard
-```
-
----
-
 ## Resume Intelligence Flow
 
 ```text
 Upload Resume
      |
      v
-Extract Text
+Extract Text from PDF
      |
      v
 Clean and Normalize Text
      |
      v
-Extract Skills
+Extract Resume Skills
      |
      v
-Compare with Job Description
+Input Job Description
      |
      v
-Generate ATS Score
+Extract JD Skills
      |
      v
-Find Missing Skills
+Run LangGraph ATS Workflow
      |
      v
-Recommend Learning Path
+Calculate ATS Score
+     |
+     v
+Find Matched and Missing Skills
+     |
+     v
+Chunk Resume Text
+     |
+     v
+Retrieve Resume Evidence
+     |
+     v
+Generate AI Recommendations
+     |
+     v
+Store Analysis Report
+```
+
+---
+
+## LangGraph ATS Workflow
+
+```text
+Start
+  |
+  v
+Load Resume
+  |
+  v
+Extract Job Description Skills
+  |
+  v
+Calculate ATS Score
+  |
+  v
+Chunk Resume Text
+  |
+  v
+Retrieve Evidence
+  |
+  v
+Generate NVIDIA LLM Report
+  |
+  v
+Validate Output
+  |
+  v
+Save Report
+  |
+  v
+End
 ```
 
 ---
@@ -296,17 +362,14 @@ skillsync-ai/
 ├── frontend/
 │   ├── src/
 │   │   ├── app/
-│   │   ├── assets/
 │   │   ├── components/
 │   │   ├── features/
 │   │   ├── lib/
 │   │   ├── pages/
 │   │   ├── routes/
-│   │   ├── App.tsx
 │   │   └── main.tsx
 │   ├── package.json
-│   ├── vite.config.ts
-│   └── Dockerfile
+│   └── vite.config.ts
 │
 ├── backend/
 │   ├── app/
@@ -319,16 +382,66 @@ skillsync-ai/
 │   │   ├── services/
 │   │   └── main.py
 │   ├── alembic/
-│   ├── uploads/
-│   │   └── resumes/
 │   ├── requirements.txt
 │   └── Dockerfile
 │
-├── docs/
+├── spark_jobs/
+│   └── day4_spark_basics.py
+│
 ├── docker-compose.yml
 ├── README.md
-├── .gitignore
 └── .env.example
+```
+
+---
+
+## Important Backend APIs
+
+### Health Check
+
+```http
+GET /api/v1/health/
+```
+
+### Register User
+
+```http
+POST /api/v1/auth/register
+```
+
+### Login User
+
+```http
+POST /api/v1/auth/login
+```
+
+### Current User
+
+```http
+GET /api/v1/auth/me
+Authorization: Bearer <token>
+```
+
+### Resume APIs
+
+```http
+POST /api/v1/resumes/upload
+GET /api/v1/resumes
+GET /api/v1/resumes/{resume_id}
+GET /api/v1/resumes/{resume_id}/download
+DELETE /api/v1/resumes/{resume_id}
+```
+
+### Report APIs
+
+```http
+POST /api/v1/reports/analyze
+GET /api/v1/reports
+GET /api/v1/reports/{report_id}
+DELETE /api/v1/reports/{report_id}
+GET /api/v1/reports/{report_id}/missing-skills
+GET /api/v1/reports/{report_id}/recommendations
+GET /api/v1/reports/{report_id}/evidence
 ```
 
 ---
@@ -338,35 +451,23 @@ skillsync-ai/
 ### 1. Clone Repository
 
 ```bash
-git clone <your-repo-url>
-cd skillsync-ai
+git clone https://github.com/saumyasrivastava21/Skill-Sync-AI.git
+cd Skill-Sync-AI
 ```
 
 ---
 
-### 2. Start Infrastructure
+### 2. Start Docker Services
 
 ```bash
-docker compose up -d postgres redis
+docker compose up -d
 ```
 
-Or start the full Docker setup:
+This starts:
 
-```bash
-docker compose up --build -d
-```
-
----
-
-### 3. Run Backend Locally
-
-```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+* FastAPI backend
+* PostgreSQL database
+* Redis cache
 
 Backend runs at:
 
@@ -382,7 +483,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-### 4. Run Frontend Locally
+### 3. Run Frontend
 
 ```bash
 cd frontend
@@ -398,166 +499,9 @@ http://localhost:5173
 
 ---
 
-## Docker Setup
-
-Start backend, frontend, PostgreSQL, and Redis:
-
-```bash
-docker compose up --build -d
-```
-
-Check running containers:
-
-```bash
-docker compose ps
-```
-
-View backend logs:
-
-```bash
-docker compose logs backend --tail 100
-```
-
-Stop all services:
-
-```bash
-docker compose down
-```
-
----
-
-## Database Migration
-
-Generate migration:
-
-```bash
-docker compose exec backend alembic revision --autogenerate -m "init users and resumes tables"
-```
-
-Apply migration:
-
-```bash
-docker compose exec backend alembic upgrade head
-```
-
-Check PostgreSQL tables:
-
-```bash
-docker exec -it skillsync-postgres psql -U skillsync_user -d skillsync_db
-```
-
-Inside psql:
-
-```sql
-\dt
-SELECT id, email, role FROM users;
-SELECT id, original_file_name, status, word_count, extracted_skills FROM resumes;
-\q
-```
-
----
-
-## Important APIs
-
-### Health Check
-
-```http
-GET /api/v1/health/
-```
-
-### Dependency Health Check
-
-```http
-GET /api/v1/health/dependencies
-```
-
-### Register User
-
-```http
-POST /api/v1/auth/register
-```
-
-Example body:
-
-```json
-{
-  "name": "Saumya Srivastava",
-  "email": "saumya@example.com",
-  "password": "password123",
-  "role": "candidate"
-}
-```
-
-### Login User
-
-```http
-POST /api/v1/auth/login
-```
-
-Example body:
-
-```json
-{
-  "email": "saumya@example.com",
-  "password": "password123"
-}
-```
-
-### Current User
-
-```http
-GET /api/v1/auth/me
-Authorization: Bearer <token>
-```
-
-### Upload Resume
-
-```http
-POST /api/v1/resumes/upload
-Authorization: Bearer <token>
-Content-Type: multipart/form-data
-```
-
-### List Resumes
-
-```http
-GET /api/v1/resumes?page=1&page_size=10
-Authorization: Bearer <token>
-```
-
-### Search Resumes
-
-```http
-GET /api/v1/resumes?page=1&page_size=10&search=python
-Authorization: Bearer <token>
-```
-
-### Get Resume Detail
-
-```http
-GET /api/v1/resumes/{resume_id}
-Authorization: Bearer <token>
-```
-
-### Download Resume
-
-```http
-GET /api/v1/resumes/{resume_id}/download
-Authorization: Bearer <token>
-```
-
-### Delete Resume
-
-```http
-DELETE /api/v1/resumes/{resume_id}
-Authorization: Bearer <token>
-```
-
----
-
 ## Environment Variables
 
-Create `.env` in the project root for Docker-based setup:
+Create `.env` inside the backend folder:
 
 ```env
 PROJECT_NAME=SkillSync AI
@@ -573,7 +517,9 @@ POSTGRES_PASSWORD=skillsync_password
 REDIS_HOST=redis
 REDIS_PORT=6379
 
-JWT_SECRET_KEY=change_this_secret_key
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+JWT_SECRET_KEY=your_secret_key
 JWT_ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 REFRESH_TOKEN_EXPIRE_DAYS=7
@@ -581,87 +527,95 @@ REFRESH_TOKEN_EXPIRE_DAYS=7
 UPLOAD_DIR=uploads/resumes
 MAX_UPLOAD_MB=5
 STORAGE_BACKEND=local
-```
 
-For local backend without Docker, use:
-
-```env
-PROJECT_NAME=SkillSync AI
-ENVIRONMENT=development
-API_V1_PREFIX=/api/v1
-
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5433
-POSTGRES_DB=skillsync_db
-POSTGRES_USER=skillsync_user
-POSTGRES_PASSWORD=skillsync_password
-
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
-JWT_SECRET_KEY=change_this_secret_key
-JWT_ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=60
-REFRESH_TOKEN_EXPIRE_DAYS=7
-
-UPLOAD_DIR=uploads/resumes
-MAX_UPLOAD_MB=5
-STORAGE_BACKEND=local
+NVIDIA_API_KEY=your_nvidia_api_key
+NVIDIA_MODEL=meta/llama-3.3-70b-instruct
 ```
 
 ---
 
-## Verified Working Flow
+## Frontend Routes
 
 ```text
-1. Start PostgreSQL, Redis, and FastAPI backend
-2. Open Swagger docs at http://127.0.0.1:8000/docs
-3. Register a candidate user
-4. Login from React frontend
-5. JWT token is saved in localStorage
-6. Frontend sends authenticated API requests using Axios interceptor
-7. Candidate uploads resume from frontend
-8. Backend stores file and metadata
-9. Background parser extracts resume text
-10. Backend extracts technical skills
-11. Resume status becomes parsed
-12. Frontend displays parsed resume, word count, and extracted skills
-13. Download and delete actions work from UI
+/login
+/register
+/dashboard
+/resumes
+/reports
 ```
 
 ---
 
-## Example Extracted Skills
+## Database Tables
 
 ```text
-Python
-FastAPI
-Docker
-PostgreSQL
-Redis
-React
-Redux
-TypeScript
-AWS
-S3
-EC2
-Apache Spark
-Solr
-Machine Learning
-Deep Learning
-Computer Vision
-NLP
-PyTorch
-TensorFlow
+users
+resumes
+analysis_reports
+alembic_version
 ```
+
+---
+
+## Analysis Report Data Stored
+
+Each ATS report stores:
+
+* User ID
+* Resume ID
+* Job title
+* Company name
+* Job description
+* Resume skills
+* Job description skills
+* Matched skills
+* Missing skills
+* Extra skills
+* ATS score
+* Skill match score
+* Keyword coverage score
+* Resume quality score
+* AI report summary
+* Role readiness
+* Improvement plan
+* Interview focus
+* Recommendations
+* Evidence snippets
+* LLM model
+* LLM usage status
+* LangGraph workflow trace
+
+---
+
+## Day 4 Demo Explanation
+
+```text
+In Day 4, I added the AI intelligence layer of SkillSync AI.
+
+The platform now supports ATS analysis using a LangGraph workflow. It compares parsed resume skills with a job description, calculates ATS score, detects matched and missing skills, retrieves resume evidence, and generates structured AI recommendations using NVIDIA LLM support.
+
+The complete flow is connected with FastAPI, PostgreSQL, Docker, React, TypeScript, and a real frontend dashboard.
+```
+
+---
+
+## Interview-Level Explanation
+
+SkillSync AI is a full-stack AI-powered resume intelligence platform built using React, TypeScript, FastAPI, PostgreSQL, Redis, Docker, JWT authentication, LangGraph, and NVIDIA LLM integration.
+
+The frontend communicates with the FastAPI backend using Axios. The backend exposes REST APIs for authentication, resume upload, resume parsing, skill extraction, and ATS analysis. PostgreSQL stores users, resumes, parsed resume metadata, extracted skills, and AI-generated analysis reports. Redis is included for caching and future background task optimization.
+
+The AI layer uses a LangGraph workflow to process job descriptions, compare them with parsed resumes, calculate ATS-style scores, identify missing skills, retrieve resume evidence, and generate structured recommendations. This makes the project closer to a production AI engineering system rather than a simple CRUD application.
+
+The project follows a production-style architecture with modular backend services, database migrations, Docker-based infrastructure, real frontend-backend integration, protected APIs, and future-ready MLOps deployment support.
 
 ---
 
 ## Production Vision
 
-SkillSync AI is designed as a production-level AI system, not just a basic CRUD app.
+SkillSync AI is designed as a production-level AI system.
 
-Future production components:
+Future production architecture:
 
 ```text
 Frontend Dashboard
@@ -672,51 +626,53 @@ PostgreSQL + Redis
         |
 Resume Parser Service
         |
-Embedding Service
+Skill Extraction Engine
         |
-Vector Database
+LangGraph Workflow
+        |
+Embedding / Vector Search Layer
         |
 LLM Recommendation Engine
         |
 MLflow Tracking
         |
 Docker + AWS Deployment
-        |
-Monitoring + CI/CD
 ```
 
 ---
 
-## Future MLOps Roadmap
+## Future Roadmap
 
-* Dockerize frontend and backend
+### Day 5 Planned
+
+* Recruiter dashboard
+* Candidate search by skills
+* Report PDF export
+* Downloadable ATS report
+* Improved report explanation
+* Role-based access polish
+* Loading skeletons
+* Better error states
+* API test cases
+* README screenshots
+* Deployment preparation
+
+### Future MLOps Roadmap
+
+* Dockerize full frontend + backend production setup
 * Add GitHub Actions CI/CD
-* Add MLflow for experiment tracking
+* Add MLflow experiment tracking
 * Add ChromaDB / FAISS for semantic resume search
 * Add AWS S3 for resume storage
 * Add AWS RDS for PostgreSQL
 * Add AWS ECR for Docker images
 * Deploy backend on AWS ECS / EC2
-* Add Redis Queue / Celery for async processing
 * Add monitoring with Prometheus and Grafana
-* Add centralized logging
+* Add structured logging middleware
 * Add production error handling
-* Add API rate limiting
-* Add model evaluation pipeline
-
----
-
-## Interview-Level Explanation
-
-SkillSync AI is a full-stack AI-powered resume intelligence platform built using React, TypeScript, FastAPI, PostgreSQL, Redis, Docker, and JWT authentication.
-
-The frontend communicates with the FastAPI backend using Axios. The backend exposes REST APIs for authentication, resume upload, resume parsing, skill extraction, and future job matching. PostgreSQL stores users, resumes, metadata, parsed text, extracted skills, and future analysis results. Redis is integrated for caching and future background task optimization.
-
-The resume upload system uses authenticated APIs. A candidate uploads a PDF, DOCX, or TXT file from the React frontend. FastAPI validates the file, stores it locally, saves metadata in PostgreSQL, and runs a background parsing task. The parser extracts text, cleans it, calculates word count, identifies technical skills, and updates the resume status.
-
-The AI layer will compare resumes with job descriptions, calculate ATS scores, identify missing skills, and generate personalized career recommendations.
-
-The project follows production-style engineering practices such as modular backend services, schema validation, database migrations, Docker-based infrastructure, environment configuration, JWT security, logging middleware, and future MLOps deployment support.
+* Add background jobs with Celery or RQ
+* Add email notifications
+* Add recruiter analytics dashboard
 
 ---
 
@@ -725,8 +681,8 @@ The project follows production-style engineering practices such as modular backe
 ```text
 Day 1: Full-stack foundation completed
 Day 2: JWT authentication completed
-Day 3: Resume upload, parsing, CRUD APIs, and frontend integration completed
-Day 4: AI Resume Intelligence / ATS Analyzer planned
+Day 3: Resume upload, parsing, CRUD, and frontend integration completed
+Day 4: LangGraph ATS analysis, NVIDIA LLM recommendations, reports UI, and dashboard integration completed
 ```
 
 ---
@@ -734,7 +690,6 @@ Day 4: AI Resume Intelligence / ATS Analyzer planned
 ## Author
 
 **Saumya Srivastava**
-
 Machine Learning Engineer | AI Engineer | Full-Stack AI Developer
 
 ---
@@ -742,13 +697,3 @@ Machine Learning Engineer | AI Engineer | Full-Stack AI Developer
 ## License
 
 This project is for learning, portfolio, and production-level AI engineering practice.
-
-````
-
-After paste:
-
-```powershell
-git add README.md
-git commit -m "Update README for Day 3 resume intelligence workflow"
-git push
-````

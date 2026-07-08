@@ -1,4 +1,4 @@
-services:
+﻿services:
   postgres:
     image: postgres:15
     container_name: skillsync-postgres
@@ -23,6 +23,18 @@ services:
     networks:
       - skillsync-network
 
+  solr:
+    image: solr:9
+    container_name: skillsync-solr
+    restart: unless-stopped
+    ports:
+      - "8983:8983"
+    command:
+      - solr-precreate
+      - skillsync_candidates
+    networks:
+      - skillsync-network
+
   backend:
     build:
       context: ./backend
@@ -36,6 +48,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - solr
     volumes:
       - ./backend/app:/app/app
       - ./backend/alembic:/app/alembic
@@ -48,6 +61,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v1
     container_name: skillsync-frontend
     restart: unless-stopped
     ports:

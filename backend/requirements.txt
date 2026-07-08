@@ -19,6 +19,8 @@ PyMuPDF
 python-docx
 aiofiles
 
+requests
+
 langchain
 langchain-core
 langgraph

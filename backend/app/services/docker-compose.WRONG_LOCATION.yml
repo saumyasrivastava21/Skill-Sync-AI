@@ -1,0 +1,19 @@
+  solr:
+    image: solr:9
+    container_name: skillsync-solr
+    ports:
+      - "8983:8983"
+    command:
+      - solr-precreate
+      - skillsync_candidates
+  
+    frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: /api/v1
+    container_name: skillsync-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   AlertTriangle,
@@ -6,6 +7,8 @@ import {
   Brain,
   CheckCircle2,
   FileText,
+  MessageSquareText,
+  Sparkles,
   Target,
   TrendingUp,
 } from "lucide-react";
@@ -26,7 +29,10 @@ import { Button } from "../components/ui/Button";
 
 type ResumeItem = {
   id: number;
-  original_file_name: string;
+  original_file_name?: string;
+  original_filename?: string;
+  filename?: string;
+  file_name?: string;
   status: string;
   word_count?: number | null;
   extracted_skills?: string[] | null;
@@ -73,6 +79,22 @@ type ReportListResponse = {
   pages: number;
 };
 
+type RagReportSummary = {
+  id: number;
+  resume_id: number;
+  question: string;
+  answer: string;
+  summary?: string | null;
+  confidence_score: number;
+  retrieval_strategy?: string | null;
+  llm_status: string;
+  created_at: string;
+};
+
+type RagReportListResponse = {
+  items: RagReportSummary[];
+  total: number;
+};
 
 function StatCard({
   title,
@@ -84,7 +106,7 @@ function StatCard({
   title: string;
   value: string;
   subtitle?: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   delay: number;
 }) {
   return (
@@ -123,6 +145,7 @@ export function CandidateDashboard() {
   const [healthStatus, setHealthStatus] = useState("checking...");
   const [resumes, setResumes] = useState<ResumeItem[]>([]);
   const [reports, setReports] = useState<ReportSummary[]>([]);
+  const [ragReports, setRagReports] = useState<RagReportSummary[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -148,9 +171,20 @@ export function CandidateDashboard() {
           }),
         ]);
 
-      setHealthStatus(healthResponse.data.status === "ok" ? "Online" : "Offline");
-      setResumes(resumesResponse.data.items);
-      setReports(reportsResponse.data.items);
+      setHealthStatus(
+        healthResponse.data.status === "ok" ? "Online" : "Offline"
+      );
+
+      setResumes(resumesResponse.data.items || []);
+      setReports(reportsResponse.data.items || []);
+
+      try {
+        const ragResponse = await api.get<RagReportListResponse>("/rag/reports");
+        setRagReports(ragResponse.data.items || []);
+      } catch (ragError) {
+        console.warn("RAG reports API not available yet:", ragError);
+        setRagReports([]);
+      }
     } catch (err) {
       console.error(err);
       setHealthStatus("Offline");
@@ -165,6 +199,7 @@ export function CandidateDashboard() {
   }, [loadDashboard]);
 
   const latestReport = reports[0] || null;
+  const latestRagReport = ragReports[0] || null;
 
   const parsedResumeCount = useMemo(() => {
     return resumes.filter((resume) => resume.status === "parsed").length;
@@ -209,7 +244,7 @@ export function CandidateDashboard() {
             Welcome back, {firstName}
           </h1>
           <p className="mt-1 text-slate-500 dark:text-slate-400">
-            Track your resumes, ATS reports, skill gaps, and AI recommendations.
+            Track resumes, ATS reports, skill gaps, Hybrid RAG insights, and AI recommendations.
           </p>
         </div>
 
@@ -237,7 +272,7 @@ export function CandidateDashboard() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
         <StatCard
           title="Latest ATS Score"
           value={latestReport ? `${latestReport.ats_score}/100` : "0/100"}
@@ -275,10 +310,22 @@ export function CandidateDashboard() {
         />
 
         <StatCard
+          title="RAG Reports"
+          value={String(ragReports.length)}
+          subtitle="Evidence-backed insights"
+          delay={0.4}
+          icon={
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
+              <MessageSquareText className="h-6 w-6" />
+            </div>
+          }
+        />
+
+        <StatCard
           title="Average ATS"
           value={`${avgAtsScore}%`}
           subtitle={`${reports.length} reports analyzed`}
-          delay={0.4}
+          delay={0.5}
           icon={
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
               <TrendingUp className="h-6 w-6" />
@@ -286,6 +333,56 @@ export function CandidateDashboard() {
           }
         />
       </div>
+
+      <Card className="overflow-hidden border-primary-200 bg-gradient-to-r from-primary-50 to-purple-50 dark:border-primary-900/50 dark:from-primary-950/30 dark:to-purple-950/30">
+        <CardContent className="p-6">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+            <div className="flex gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-600 text-white shadow-lg">
+                <Sparkles className="h-6 w-6" />
+              </div>
+
+              <div>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+                  Hybrid RAG Resume Insights
+                </h2>
+                <p className="mt-1 max-w-2xl text-sm text-slate-600 dark:text-slate-300">
+                  Ask questions about your resume using pgvector semantic retrieval,
+                  Solr keyword search, and NVIDIA LLM grounded answers.
+                </p>
+
+                {latestRagReport ? (
+                  <div className="mt-3 rounded-xl bg-white/70 p-3 text-sm dark:bg-slate-950/40">
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      Latest RAG question:
+                    </p>
+                    <p className="mt-1 line-clamp-2 text-slate-600 dark:text-slate-300">
+                      {latestRagReport.question}
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500">
+                      Strategy:{" "}
+                      {latestRagReport.retrieval_strategy ||
+                        "hybrid_pgvector_solr"}{" "}
+                      · Status: {latestRagReport.llm_status}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+                    No RAG report yet. Start by indexing your resume and asking AI.
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <Link to="/rag-chat">
+              <Button className="w-full md:w-auto">
+                <MessageSquareText className="mr-2 h-4 w-4" />
+                Ask AI About Resume
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
@@ -363,6 +460,13 @@ export function CandidateDashboard() {
               <Button className="w-full justify-start">
                 <Target className="mr-2 h-4 w-4" />
                 Analyze Job Description
+              </Button>
+            </Link>
+
+            <Link to="/rag-chat" className="block">
+              <Button className="w-full justify-start" variant="outline">
+                <MessageSquareText className="mr-2 h-4 w-4" />
+                Hybrid RAG Resume Chat
               </Button>
             </Link>
 

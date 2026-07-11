@@ -1,6 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import { AppShell } from "../components/layout/AppShell";
 import { ProtectedRoute } from "../components/layout/ProtectedRoute";
+
 import { Landing } from "../pages/Landing";
 import { Login } from "../pages/Login";
 import { Register } from "../pages/Register";
@@ -11,6 +13,7 @@ import { ResumeUpload } from "../pages/ResumeUpload";
 import { Settings } from "../pages/Settings";
 import { Profile } from "../pages/Profile";
 import { NotFound } from "../pages/NotFound";
+import { RagChat } from "../pages/RagChat";
 
 export function AppRoutes() {
   return (
@@ -21,7 +24,11 @@ export function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected Routes - All Users */}
+        {/* TEMP DEBUG: Keep RAG route outside role guard */}
+        <Route path="/rag-chat" element={<RagChat />} />
+        <Route path="/ragchat" element={<Navigate to="/rag-chat" replace />} />
+
+        {/* Protected Routes - All Logged-in Users */}
         <Route element={<ProtectedRoute />}>
           <Route path="/settings" element={<Settings />} />
           <Route path="/profile" element={<Profile />} />

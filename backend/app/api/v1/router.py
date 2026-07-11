@@ -1,4 +1,5 @@
-﻿from app.api.v1 import role_auth_routes
+﻿from app.api.v1 import rag_routes
+from app.api.v1 import role_auth_routes
 from fastapi import APIRouter
 
 from app.api.v1 import (
@@ -17,4 +18,7 @@ api_router.include_router(resume_routes.router)
 api_router.include_router(report_routes.router)
 api_router.include_router(recruiter_routes.router)
 api_router.include_router(role_auth_routes.router, prefix="/auth", tags=["Role Auth"])
+
+
+api_router.include_router(rag_routes.router, prefix="/rag", tags=["Hybrid RAG"])
 

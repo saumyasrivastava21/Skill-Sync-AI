@@ -25,3 +25,4 @@ langchain
 langchain-core
 langgraph
 langchain-nvidia-ai-endpoints
+pgvector
